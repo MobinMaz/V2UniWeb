@@ -83,6 +83,9 @@ def signInReq(request):
             else:
                 messages.success(request, '۲ فیلد پسورد با هم فرق میکنن دقت کن دانشجوی گل!')
                 return redirect('signIN')
+        elif any(char.isalpha() for char in form.data['studentCode']):
+            messages.success(request,'لطفا در فیلد کد داشنجویی فقط عدد وارد کنید')
+            return redirect('signIN')
         else:
             messages.success(request,'در ثبت نام شما مشکلی ایجاد شده است لطفا مجدد امتحان کنید')
     return redirect('index')

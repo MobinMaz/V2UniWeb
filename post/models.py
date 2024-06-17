@@ -2,7 +2,7 @@ from django.db import models
 import jdatetime
 from django_jalali.db import models as jalali_models
 from django.contrib.auth.models import User
-
+from . import validatorFile
 # Create your models here.
 """
 this place we create models for posts and cattegory for every post
@@ -28,7 +28,7 @@ class user(models.Model):
     password = models.CharField(max_length=100,default='',null=False,blank=False)
     email = models.CharField(max_length=100,default='',null=False,blank=False)
     image = models.ImageField(upload_to='media/user/',default='default.jpg')
-    studentCode=models.IntegerField(default=0,null=False,blank=False)
+    studentCode=models.CharField(default=0,null=False,blank=False,max_length=12,validators=[validatorFile.validate_No_Alphabet])
     adminStutus=models.BooleanField(default=False)
     teacherStutus=models.BooleanField(default=False)
     vip=models.BooleanField(default=False)
