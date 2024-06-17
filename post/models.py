@@ -66,3 +66,12 @@ class comment(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f'{self.text}'
+class Certificate(models.Model):
+    title = models.CharField(max_length=100,default='',null=False,blank=False)
+    description = models.TextField(default='',null=True,blank=True)
+    image = models.ImageField(upload_to='media/certificate/',default='default.jpg')
+    pub_date = models.DateTimeField(auto_now_add=True)
+    user=models.ForeignKey(user, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.title}'
