@@ -23,7 +23,10 @@ def contact(request):
     return render(request=request,template_name='Contact_us.html')
 def singlepagePost(request,id):
     post=models.post.objects.get(id=id)
-    return render(request=request,template_name='single.html',context={'post':post})
+    images=models.ImageCollection.objects.filter(post=post).all()
+    fistImage=images[0]
+    images=images[1:]
+    return render(request=request,template_name='single.html',context={'post':post,'images':images,'fistImage':fistImage})
 def logInView(request):
     form = loginForm.LoginForm()
 

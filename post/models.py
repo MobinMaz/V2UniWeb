@@ -15,11 +15,12 @@ class post(models.Model):
     image = models.ImageField(upload_to='media/post/',default='default.jpg')
     pub_date = jalali_models.jDateTimeField(auto_now_add=True)
     category = models.ForeignKey('category',on_delete=models.CASCADE)
-    imageCollections=models.ForeignKey(ImageCollection,on_delete=models.CASCADE)
     def __str__(self):
         return f'{self.title} , {self.pub_date}'
 class ImageCollection(models.Model):
+    post = models.ForeignKey('post',on_delete=models.CASCADE,null=True,blank=True)
     image=models.ImageField(upload_to='media/postCollection/',default='default.jpg')
+
 class category(models.Model):
     name = models.CharField(max_length=100,default='',null=False,blank=False)
     def __str__(self):
