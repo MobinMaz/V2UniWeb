@@ -51,10 +51,14 @@ def Login(request):
             email=form.cleaned_data['email']
             password=form.cleaned_data['password']
             user=authenticate(username=email,password=password)
-            login(request,user)
-            messages.success(request,'با موفقیت وارد شدید!')
-            messageTmp=''
-            return render(request=request,template_name='index.html',context={'posts':posts,'users':users,'videos':videos,'user.id':user.id,'messageTmp':messageTmp})
+            if user is not None:
+                login(request,user)
+                messages.success(request,'با موفقیت وارد شدید!')
+                messageTmp=''
+                return render(request=request,template_name='index.html',context={'posts':posts,'users':users,'videos':videos,'user.id':user.id,'messageTmp':messageTmp})
+            else :
+                messages.success(request,"رمز عبور درست نمی باشد")
+                return redirect('LogIn')
         else:
             messages.error(request,'در ورود شما مشکلی پیش آمد!')
             return redirect('login')

@@ -14,7 +14,7 @@ class post(models.Model):
     largeContent = models.TextField(default='',null=True,blank=True)
     image = models.ImageField(upload_to='media/post/',default='default.jpg')
     pub_date = jalali_models.jDateTimeField(auto_now_add=True)
-    category = models.ForeignKey('category',on_delete=models.CASCADE)
+    category = models.ManyToManyRel(to='category',field=models.CharField)
     def __str__(self):
         return f'{self.title} , {self.pub_date}'
 class ImageCollection(models.Model):
