@@ -23,7 +23,10 @@ def contact(request):
     return render(request=request,template_name='Contact_us.html')
 def singlepagePost(request,id):
     post=models.post.objects.get(id=id)
-    return render(request=request,template_name='single.html',context={'post':post})
+    images=models.ImageCollection.objects.filter(post=post).all()
+    fistImage=images[0]
+    images=images[1:]
+    return render(request=request,template_name='single.html',context={'post':post,'images':images,'fistImage':fistImage})
 def logInView(request):
     form = loginForm.LoginForm()
 
@@ -48,10 +51,14 @@ def Login(request):
             email=form.cleaned_data['email']
             password=form.cleaned_data['password']
             user=authenticate(username=email,password=password)
-            login(request,user)
-            messages.success(request,'با موفقیت وارد شدید!')
-            messageTmp=''
-            return render(request=request,template_name='index.html',context={'posts':posts,'users':users,'videos':videos,'user.id':user.id,'messageTmp':messageTmp})
+            if user is not None:
+                login(request,user)
+                messages.success(request,'با موفقیت وارد شدید!')
+                messageTmp=''
+                return render(request=request,template_name='index.html',context={'posts':posts,'users':users,'videos':videos,'user.id':user.id,'messageTmp':messageTmp})
+            else :
+                messages.success(request,"رمز عبورتون یا نام کاربری درست نمی باشد")
+                return redirect('LogIn')
         else:
             messages.error(request,'در ورود شما مشکلی پیش آمد!')
             return redirect('login')
@@ -83,6 +90,9 @@ def signInReq(request):
             else:
                 messages.success(request, '۲ فیلد پسورد با هم فرق میکنن دقت کن دانشجوی گل!')
                 return redirect('signIN')
+        elif any(char.isalpha() for char in form.data['studentCode']):
+            messages.success(request,'لطفا در فیلد کد داشنجویی فقط عدد وارد کنید')
+            return redirect('signIN')
         else:
             messages.success(request,'در ثبت نام شما مشکلی ایجاد شده است لطفا مجدد امتحان کنید')
     return redirect('index')
@@ -104,3 +114,20 @@ def singlepageteacher(request,id):
 def singlepageVipUser(request,id):
     user = models.user.objects.get(id=id)
     return render(request=request, template_name='singleVipUser.html', context={'user': user})
+def Certificate(request,id):
+    user = User.objects.get(id=id)
+    if not user.is_staff:
+        user1=models.user.objects.get(name=user.username)
+        certificate=models.Certificate.objects.filter(user=user1).all()
+
+        if len(certificate)==0:
+            messages.success(request,'شما مدزکی ندارید!')
+            return redirect('index')
+        else:
+            return render(request=request,template_name='certificateAll.html',context={'certificate':certificate})
+    else:
+        messages.success(request,'شما مدیر هستید و منظقا مدرکی ندارید!')
+        return redirect('index')
+def singleCertificate(request,id):
+    certificate=models.Certificate.objects.get(id=id)
+    return render(request=request,template_name='singleCertificate.html',context={'certificate':certificate})
