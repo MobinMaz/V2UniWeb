@@ -115,5 +115,19 @@ def singlepageVipUser(request,id):
     user = models.user.objects.get(id=id)
     return render(request=request, template_name='singleVipUser.html', context={'user': user})
 def Certificate(request,id):
-    certificate=models.Certificate.objects.get(user=id)
-    return render(request=request,template_name='',context={'certificate':certificate})
+    user = User.objects.get(id=id)
+    if not user.is_staff:
+        user1=models.user.objects.get(name=user.username)
+        certificate=models.Certificate.objects.filter(user=user1).all()
+
+        if len(certificate)==0:
+            messages.success(request,'شما مدزکی ندارید!')
+            return redirect('index')
+        else:
+            return render(request=request,template_name='certificateAll.html',context={'certificate':certificate})
+    else:
+        messages.success(request,'شما مدیر هستید و منظقا مدرکی ندارید!')
+        return redirect('index')
+def singleCertificate(request,id):
+    certificate=models.Certificate.objects.get(id=id)
+    return render(request=request,template_name='singleCertificate.html',context={'certificate':certificate})

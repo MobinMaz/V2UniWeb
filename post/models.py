@@ -7,6 +7,10 @@ from . import validatorFile
 """
 this place we create models for posts and cattegory for every post
 """
+class category(models.Model):
+    name = models.CharField(max_length=100,default='',null=False,blank=False)
+    def __str__(self):
+        return f'{self.name}'
 class post(models.Model):
     title = models.CharField(max_length=100,default='',null=False,blank=False)
     #author = models.CharField(max_length=100,default='',null=False,blank=False)
@@ -14,17 +18,14 @@ class post(models.Model):
     largeContent = models.TextField(default='',null=True,blank=True)
     image = models.ImageField(upload_to='media/post/',default='default.jpg')
     pub_date = jalali_models.jDateTimeField(auto_now_add=True)
-    category = models.ManyToManyRel(to='category',field=models.CharField)
+    category = models.ManyToManyField(category)
     def __str__(self):
         return f'{self.title} , {self.pub_date}'
 class ImageCollection(models.Model):
     post = models.ForeignKey('post',on_delete=models.CASCADE,null=True,blank=True)
     image=models.ImageField(upload_to='media/postCollection/',default='default.jpg')
 
-class category(models.Model):
-    name = models.CharField(max_length=100,default='',null=False,blank=False)
-    def __str__(self):
-        return f'{self.name}'
+
 #this place you can create custom user models for every post for every category and create assiciated model for every post
 class user(models.Model):
     name = models.CharField(max_length=100,default='',null=False,blank=False)
