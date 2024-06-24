@@ -18,4 +18,5 @@ urlpatterns = [
     path('video/', views.Video, name='video'),
     path('teacher/', views.teacher, name='video'),
     path('VipUser/', views.VipUser, name='video'),
+    path('Certificate/<int:id>/', views.Certificate, name='certificate'),
 ]

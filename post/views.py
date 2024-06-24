@@ -57,7 +57,7 @@ def Login(request):
                 messageTmp=''
                 return render(request=request,template_name='index.html',context={'posts':posts,'users':users,'videos':videos,'user.id':user.id,'messageTmp':messageTmp})
             else :
-                messages.success(request,"رمز عبور درست نمی باشد")
+                messages.success(request,"رمز عبورتون یا نام کاربری درست نمی باشد")
                 return redirect('LogIn')
         else:
             messages.error(request,'در ورود شما مشکلی پیش آمد!')
@@ -114,3 +114,6 @@ def singlepageteacher(request,id):
 def singlepageVipUser(request,id):
     user = models.user.objects.get(id=id)
     return render(request=request, template_name='singleVipUser.html', context={'user': user})
+def Certificate(request,id):
+    certificate=models.Certificate.objects.get(user=id)
+    return render(request=request,template_name='',context={'certificate':certificate})
