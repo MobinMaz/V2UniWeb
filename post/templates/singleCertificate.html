@@ -17,14 +17,30 @@
                 <p style="font-size: xx-large;">
                   {{ certificate.description }}
                 </p>
+                <button id="GetLink" class="form-control" style="background: #6f42c1;color: white">GetLink</button>
+                <div id="link">
+                    </div>
             </div>
 
         </div>
     </div>
 </div>
+<script>   document.getElementById('GetLink').addEventListener("click", function (){
+
+        let value=window.location.href
+        let linkFather=document.getElementById('link');
+       let link=document.createElement("input");
+        link.type='text';
+       link.className='form-control';
+       link.value=value
+            while (linkFather.firstChild) {
+            linkFather.removeChild(linkFather.firstChild);
+        }
+       linkFather.appendChild(link);
+    });</script>
+    <script>if (!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){$(window).stellar();}</script>
+<script src="{% static 'js/main.js' %}"></script>
 
 {% endblock %}
 
 
-<script>if (!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){$(window).stellar();}</script>
-<script src="{% static 'js/main.js' %}"></script>
