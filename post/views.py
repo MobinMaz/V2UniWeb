@@ -8,10 +8,15 @@ from tkinter import messagebox
 # Create your views here.
 def index(request):
     posts = models.post.objects.all().order_by('-id')
+    for post in posts:
+        if post.pub_date.minute <10:
+            post.pub_date=str(post.pub_date.year)+'-'+str(post.pub_date.month)+'-'+str(post.pub_date.day)+' '+str(post.pub_date.hour)+': 0'+str(post.pub_date.minute)
+        else:
+            post.pub_date = str(post.pub_date.year) + '-' + str(post.pub_date.month) + '-' + str(post.pub_date.day) + ' ' + str(post.pub_date.hour)+': '+str(post.pub_date.minute)
     postVIP=posts[0]
     form=commentForm.CommentForm()
-    users = models.user.objects.filter(teacherStutus=True).all()
-    users1 = models.user.objects.filter(vip=True).all()
+    users = models.user.objects.filter(teacher=True).all()
+    users1 = models.user.objects.filter(ForumsMember=True).all()
     videos = models.videoclass.objects.all()
     for user in users:
         user.password=0
@@ -24,8 +29,13 @@ def contact(request):
 def singlepagePost(request,id):
     post=models.post.objects.get(id=id)
     images=models.ImageCollection.objects.filter(post=post).all()
-    fistImage=images[0]
-    images=images[1:]
+    fistImage=0
+    if len(images) != 0:
+        fistImage = images[0]
+        images = images[1:]
+    else:
+        images=0
+    post.largeContent=post.largeContent[::-1]
     return render(request=request,template_name='single.html',context={'post':post,'images':images,'fistImage':fistImage})
 def logInView(request):
     form = loginForm.LoginForm()

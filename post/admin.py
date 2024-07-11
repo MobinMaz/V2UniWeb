@@ -17,5 +17,5 @@ class userAdmin(admin.ModelAdmin):
 
 admin.site.register(models.comment)
 
-admin.site.register(models.category)
+admin.site.register(models.Categorie)
 admin.site.register(models.videoclass)
