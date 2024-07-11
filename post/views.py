@@ -35,6 +35,11 @@ def singlepagePost(request,id):
         images = images[1:]
     else:
         images=0
+    if post.pub_date.minute < 10:
+        post.pub_date = str(post.pub_date.year) + '-' + str(post.pub_date.month) + '-' + str(post.pub_date.day) + ' '+' ساعت :' + str(post.pub_date.hour) + ': 0' + str(post.pub_date.minute)
+    else:
+        post.pub_date = str(post.pub_date.year) + '-' + str(post.pub_date.month) + '-' + str(post.pub_date.day) + ' ' + str(post.pub_date.hour)+ ': ' + str(post.pub_date.minute)
+
     post.largeContent=post.largeContent[::-1]
     return render(request=request,template_name='single.html',context={'post':post,'images':images,'fistImage':fistImage})
 def logInView(request):
@@ -113,7 +118,7 @@ def singlepageVideo(request,id):
     video=models.videoclass.objects.get(id=id)
     return render(request=request,template_name='singleVideo.html',context={'post':video})
 def teacher(request):
-    users = models.user.objects.filter(teacherStutus=True).all()
+    users = models.user.objects.filter(teacher=True).all()
     return render(request=request,template_name='teacherForm.html',context={'users':users})
 def VipUser(request):
     users = models.user.objects.filter(vip=True).all()
