@@ -6,25 +6,27 @@
         <div class="row mx-0">
             <div class="col-md-6 col-12 paddding animate-box" data-animate-effect="fadeIn">
                 <div class="fh5co_suceefh5co_height"><img src="{{ postVIP.image.url }}" alt="img" />
+                    <a href="/singlepagePost/{{ postVIP.id }}" class="color_fff">
                     <div class="fh5co_suceefh5co_height_position_absolute"></div>
                     <div class="fh5co_suceefh5co_height_position_absolute_font">
                         <div class=""><a href="/singlepagePost/{{ postVIP.id }}" class="color_fff"> <i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{ postVIP.pub_date }}
                             </a></div>
                         <div class=""><a href="/singlepagePost/{{ postVIP.id }}" class="fh5co_good_font"> {{ postVIP.title }}</a></div>
                     </div>
-                </div>
+                </a></div>
             </div>
             <div class="col-md-6">
                 <div class="row">
                     {% for post in  posts %}
                     <div class="col-md-6 col-6 paddding animate-box" data-animate-effect="fadeIn">
                         <div class="fh5co_suceefh5co_height_2"><img src="{{ post.image.url }}" alt="img" />
+                            <a href="/singlepagePost/{{ post.id }}" class="color_fff">
                             <div class="fh5co_suceefh5co_height_position_absolute"></div>
                             <div class="fh5co_suceefh5co_height_position_absolute_font_2">
                                 <div class=""><a href="/singlepagePost/{{ post.id }}" class="color_fff"> <i
                                             class="fa fa-clock-o"></i>&nbsp;&nbsp;{{ post.pub_date }}</a></div>
                                 <div class=""><a href="/singlepagePost/{{ post.id }}" class="fh5co_good_font_2"> {{ post.title }}</a></div>
-                            </div>
+                            </div></a>
                         </div>
                     </div>
                     {% endfor %}
@@ -38,7 +40,7 @@
     <!--start trending  ya hamon member angoman-->
     <!--start trending  ya hamon member angoman-->
     <!--start trending  ya hamon member angoman-->
-
+    <div  style="width: 1500px;padding: 10px;text-align: center; border: 3px solid #6f42c1; font-size: 35px">بعد از وارد شدن به سایت می توانید از انتهای همین صفحه نظرات و پیشنهادات خودتون را برای بهبود عملکرده ما برسونید</div>
     <div class="container-fluid pt-3">
         <div class="container animate-box" data-animate-effect="fadeIn">
             <div>
@@ -107,7 +109,7 @@
                 {% for post in posts %}
                 <div class="item px-2">
                     <div class="fh5co_hover_news_img ">
-                        <div class="fh5co_news_img "><img src="{{ post.image.url }}" alt="" /></div>
+                         <a href="/singlepagePost/{{ post.id }}" class="d-block fh5co_small_post_heading"><div class="fh5co_news_img "><img src="{{ post.image.url }}" alt="" /></div></a>
                         <div>
                             <a href="/singlepagePost/{{ post.id }}" class="d-block fh5co_small_post_heading"><span class="">{{ post.title }}</span></a>
                             <div class="c_g"><i class="fa fa-clock-o"></i> {{ post.pub_date }}</div>
@@ -180,7 +182,7 @@
                     <div class="row pb-4">
                         <div class="col-md-5">
                             <div class="fh5co_hover_news_img">
-                                <div class="fh5co_news_img"><img class="img-fluid" src="{{ post.image.url }}" alt="" /></div>
+                                <a href="/singlepagePost/{{ post.id }}" class="fh5co_magna py-2"><div class="fh5co_news_img"><img class="img-fluid" src="{{ post.image.url }}" alt="" /></div> </a>
                                 <div></div>
                             </div>
                         </div>
@@ -191,9 +193,9 @@
 
                             </div>
 
-                        </div>
-                        <a href="/singlepagePost/{{ post.id }}"
-                                class="fh5co_mini_time py-3"> {{ post.pub_date }} </a>
+                        </div><i class="fa fa-clock-o">    <a href="/singlepagePost/{{ post.id }}"
+                                class="fh5co_mini_time py-3 "> {{ post.pub_date }} </a></i>
+
                     </div>
                     {% endfor %}
 
@@ -288,7 +290,7 @@
                     <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4" dir="rtl"><a href="/VipUser" style="color: black;text-decoration: none">اعضا انجمن</a></div>
                 </div>
                 {% for item in users1 %}
-                    {% if item.vip %}
+                    {% if item.ForumsMember %}
                 <div class="row pb-3">
 
                     <div class="col-5 align-self-center">
@@ -296,7 +298,7 @@
                     </div>
                     <div class="col-7 paddding">
                         <a href="/singlepageVipUser/{{ item.id }}" style="text-decoration: none ;color: black;"><div class="most_fh5co_treding_font"> {{ item.name }}{{ item.family }}
-                        </div>response
+                        </div>
                         <div class="most_fh5co_treding_font_123"> {{ item.response }}</div></a>
                     </div>
 

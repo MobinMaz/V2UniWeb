@@ -7,7 +7,7 @@ from . import validatorFile
 """
 this place we create models for posts and cattegory for every post
 """
-class category(models.Model):
+class Categorie(models.Model):
     name = models.CharField(max_length=100,default='',null=False,blank=False)
     def __str__(self):
         return f'{self.name}'
@@ -17,8 +17,8 @@ class post(models.Model):
     content = models.TextField(default='',null=True,blank=True)
     largeContent = models.TextField(default='',null=True,blank=True)
     image = models.ImageField(upload_to='media/post/',default='default.jpg')
-    pub_date = jalali_models.jDateTimeField(auto_now_add=True)
-    category = models.ManyToManyField(category)
+    pub_date = jalali_models.jDateTimeField()
+    category = models.ManyToManyField(Categorie)
     def __str__(self):
         return f'{self.title} , {self.pub_date}'
 class ImageCollection(models.Model):
@@ -34,11 +34,11 @@ class user(models.Model):
     email = models.CharField(max_length=100,default='',null=False,blank=False)
     image = models.ImageField(upload_to='media/user/',default='default.jpg')
     studentCode=models.CharField(default=0,null=False,blank=False,max_length=12,validators=[validatorFile.validate_No_Alphabet])
-    adminStutus=models.BooleanField(default=False)
-    teacherStutus=models.BooleanField(default=False)
-    vip=models.BooleanField(default=False)
-    response=models.CharField(max_length=100,default='')
-    bio=models.CharField(max_length=100,default='')
+    admin=models.BooleanField(default=False)
+    teacher=models.BooleanField(default=False)
+    ForumsMember=models.BooleanField(default=False)
+    title=models.CharField(max_length=100,default='')
+    bio=models.CharField(max_length=500,default='')
     def __str__(self):
         return f'{self.name}'
 """
