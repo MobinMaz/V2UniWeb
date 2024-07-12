@@ -40,7 +40,7 @@
     <!--start trending  ya hamon member angoman-->
     <!--start trending  ya hamon member angoman-->
     <!--start trending  ya hamon member angoman-->
-    <div  style="width: 1500px;padding: 10px;text-align: center; border: 3px solid #6f42c1; font-size: 35px">بعد از وارد شدن به سایت می توانید از انتهای همین صفحه نظرات و پیشنهادات خودتون را برای بهبود عملکرده ما برسونید</div>
+   
     <div class="container-fluid pt-3">
         <div class="container animate-box" data-animate-effect="fadeIn">
             <div>
@@ -194,7 +194,7 @@
                             </div>
 
                         </div><i class="fa fa-clock-o">    <a href="/singlepagePost/{{ post.id }}"
-                                class="fh5co_mini_time py-3 "> {{ post.pub_date }} </a></i>
+                                class="fh5co_mini_time py-3 "><bdo dir="ltr"> {{ post.pub_date }}</bdo> </a></i>
 
                     </div>
                     {% endfor %}
@@ -297,7 +297,7 @@
                         <a href="/singlepageVipUser/{{ item.id }}"><img src="{{ item.image.url }}" alt="img" class="fh5co_most_trading" /></a>
                     </div>
                     <div class="col-7 paddding">
-                        <a href="/singlepageVipUser/{{ item.id }}" style="text-decoration: none ;color: black;"><div class="most_fh5co_treding_font"> {{ item.name }}{{ item.family }}
+                        <a href="/singlepageVipUser/{{ item.id }}" style="text-decoration: none ;color: black;"><div class="most_fh5co_treding_font"><span> {{ item.name }} {{ item.family }}</span>
                         </div>
                         <div class="most_fh5co_treding_font_123"> {{ item.response }}</div></a>
                     </div>
