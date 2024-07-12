@@ -23,6 +23,14 @@ def index(request):
     return render(request, 'index.html',context={'posts':posts,'users':users,'users1':users1,'videos':videos,'form':form,'postVIP':postVIP})
 def blog(request):
     posts = models.post.objects.all().order_by('-id')
+    for post in posts:
+        if post.pub_date.minute < 10:
+            post.pub_date = str(post.pub_date.year) + '-' + str(post.pub_date.month) + '-' + str(
+                post.pub_date.day) + ' ' + str(post.pub_date.hour) + ': 0' + str(post.pub_date.minute)
+        else:
+            post.pub_date = str(post.pub_date.year) + '-' + str(post.pub_date.month) + '-' + str(
+                post.pub_date.day) + ' ' + str(post.pub_date.hour) + ': ' + str(post.pub_date.minute)
+
     return render(request, 'blog.html',context={'posts':posts})
 def contact(request):
     return render(request=request,template_name='Contact_us.html')
