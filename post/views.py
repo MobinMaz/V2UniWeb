@@ -48,8 +48,8 @@ def singlepagePost(request,id):
     else:
         post.pub_date = str(post.pub_date.year) + '-' + str(post.pub_date.month) + '-' + str(post.pub_date.day) + ' ' + str(post.pub_date.hour)+ ': ' + str(post.pub_date.minute)
 
-    post.largeContent=post.largeContent[::-1]
-    return render(request=request,template_name='single.html',context={'post':post,'images':images,'fistImage':fistImage})
+    content=models.largeContent.objects.filter(post=post).all()
+    return render(request=request,template_name='single.html',context={'post':post,'images':images,'fistImage':fistImage,'content':content})
 def logInView(request):
     form = loginForm.LoginForm()
 
