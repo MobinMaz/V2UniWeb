@@ -7,9 +7,12 @@ class PostImage(admin.TabularInline):
 class Certification(admin.TabularInline):
     model = models.Certificate
     extra = 1
+class largeContent(admin.TabularInline):
+    model = models.largeContent
+    extra = 1
 @admin.register(models.post)
 class postAdmin(admin.ModelAdmin):
-    inlines = [PostImage]
+    inlines = [PostImage,largeContent]
 @admin.register(models.user)
 class userAdmin(admin.ModelAdmin):
     inlines = [Certification]

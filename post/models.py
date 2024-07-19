@@ -15,12 +15,17 @@ class post(models.Model):
     title = models.CharField(max_length=100,default='',null=False,blank=False)
     #author = models.CharField(max_length=100,default='',null=False,blank=False)
     content = models.TextField(default='',null=True,blank=True)
-    largeContent = models.TextField(default='',null=True,blank=True)
+
     image = models.ImageField(upload_to='media/post/',default='default.jpg')
     pub_date = jalali_models.jDateTimeField()
     category = models.ManyToManyField(Categorie)
     def __str__(self):
         return f'{self.title} , {self.pub_date}'
+class largeContent(models.Model):
+    post = models.ForeignKey('post', on_delete=models.CASCADE)
+    content = models.TextField(default='',null=True,blank=True)
+    def __str__(self):
+        return f'{self.content}'
 class ImageCollection(models.Model):
     post = models.ForeignKey('post',on_delete=models.CASCADE,null=True,blank=True)
     image=models.ImageField(upload_to='media/postCollection/',default='default.jpg')
@@ -41,6 +46,7 @@ class user(models.Model):
     bio=models.CharField(max_length=500,default='')
     def __str__(self):
         return f'{self.name}'
+
 """
 class comment(models.Model):
     text = models.TextField()

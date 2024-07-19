@@ -25,10 +25,14 @@
                 <br>
                 <span style="font-size: 30px">{{ post.pub_date }}</span>
                     </div>
-                <pre
-                    style=";text-align: right;font-size: large;white-space: pre-wrap;">
-                    {{ post.largeContent }}
-                </pre>
+                {% for item in content %}
+                <p
+                    style=";text-align: center;font-size: large;white-space: pre-wrap;">
+                    {{ item}}
+                </p>
+                    <br>
+                    <br>
+                {% endfor %}
             </div>
 
         </div>
