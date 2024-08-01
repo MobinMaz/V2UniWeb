@@ -7,12 +7,17 @@ from django.contrib import messages
 from tkinter import messagebox
 # Create your views here.
 def index(request):
-    posts = models.post.objects.all().order_by('-id')
+    posts = models.post.objects.all().order_by('-date')
     for post in posts:
         if post.pub_date.minute <10:
             post.pub_date=str(post.pub_date.year)+'-'+str(post.pub_date.month)+'-'+str(post.pub_date.day)+' '+str(post.pub_date.hour)+': 0'+str(post.pub_date.minute)
         else:
             post.pub_date = str(post.pub_date.year) + '-' + str(post.pub_date.month) + '-' + str(post.pub_date.day) + ' ' + str(post.pub_date.hour)+': '+str(post.pub_date.minute)
+    top4post=[]
+    try:
+        top4post=posts[0:4]
+    except:
+        top4post=posts
     postVIP=posts[0]
     form=commentForm.CommentForm()
     users = models.user.objects.filter(teacher=True).all()
@@ -20,7 +25,7 @@ def index(request):
     videos = models.videoclass.objects.all()
     for user in users:
         user.password=0
-    return render(request, 'index.html',context={'posts':posts,'users':users,'users1':users1,'videos':videos,'form':form,'postVIP':postVIP})
+    return render(request, 'index.html',context={'posts':posts,'toppost':top4post,'users':users,'users1':users1,'videos':videos,'form':form,'postVIP':postVIP})
 def blog(request):
     posts = models.post.objects.all().order_by('-id')
     for post in posts:
