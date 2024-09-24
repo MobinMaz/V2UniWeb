@@ -5,14 +5,18 @@ from django.contrib.auth.models import User
 from . import loginForm , commentForm ,signForm
 from django.contrib import messages
 from tkinter import messagebox
+
+from .admin import userAdmin
+
+
 # Create your views here.
 def index(request):
-    posts = models.post.objects.all().order_by('-date')
+    posts = models.post.objects.all().order_by('-pub_date')[0:6]
     for post in posts:
         if post.pub_date.minute <10:
             post.pub_date=str(post.pub_date.year)+'-'+str(post.pub_date.month)+'-'+str(post.pub_date.day)+' '+str(post.pub_date.hour)+': 0'+str(post.pub_date.minute)
         else:
-            post.pub_date = str(post.pub_date.year) + '-' + str(post.pub_date.month) + '-' + str(post.pub_date.day) + ' ' + str(post.pub_date.hour)+': '+str(post.pub_date.minute)
+            post.pub_date= str(post.pub_date.year) + '-' + str(post.pub_date.month) + '-' + str(post.pub_date.day) + ' ' + str(post.pub_date.hour)+': '+str(post.pub_date.minute)
     top4post=[]
     try:
         top4post=posts[0:4]
@@ -107,14 +111,19 @@ def signInReq(request):
     if request.method=='POST':
         form=signForm.SignForm(data=request.POST)
         if form.is_valid():
+            users = models.user.objects.filter(email=form.cleaned_data['email']).all()
             if form.cleaned_data['password']==form.cleaned_data['repassword']:
-                form.save()
-                user=User.objects.create_user(form.cleaned_data['name'],form.cleaned_data['email'],form.cleaned_data['password'])
-                user.set_password(form.cleaned_data['password'])
-                user.save()
-                user=authenticate(request,username=form.cleaned_data['name'],password=form.cleaned_data['password'])
-                login(request,user,backend='django.contrib.auth.backends.ModelBackend')
-                return redirect('index')
+                if len(users)==0:
+                    form.save()
+                    user=User.objects.create_user(form.cleaned_data['name'],form.cleaned_data['email'],form.cleaned_data['password'])
+                    user.set_password(form.cleaned_data['password'])
+                    user.save()
+                    user=authenticate(request,username=form.cleaned_data['name'],password=form.cleaned_data['password'])
+                    login(request,user,backend='django.contrib.auth.backends.ModelBackend')
+                    return redirect('index')
+                else:
+                    messages.success(request, 'فردی با این مشخصات قبلا ثبت نام کرده لطفا از ایمیل دیگری استفاده کنید')
+                    return redirect('signIN')
             else:
                 messages.success(request, '۲ فیلد پسورد با هم فرق میکنن دقت کن دانشجوی گل!')
                 return redirect('signIN')
@@ -149,7 +158,7 @@ def Certificate(request,id):
         certificate=models.Certificate.objects.filter(user=user1).all()
 
         if len(certificate)==0:
-            messages.success(request,'شما مدزکی ندارید!')
+            messages.success(request,'شما مدرکی ندارید!')
             return redirect('index')
         else:
             return render(request=request,template_name='certificateAll.html',context={'certificate':certificate})

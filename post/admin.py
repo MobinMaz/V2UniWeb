@@ -1,5 +1,7 @@
 from django.contrib import admin
 from . import models
+from django.contrib.auth.models import User
+admin.site.unregister(User)
 # Register your models here.
 class PostImage(admin.TabularInline):
     model = models.ImageCollection
@@ -15,6 +17,7 @@ class postAdmin(admin.ModelAdmin):
     inlines = [PostImage,largeContent]
 @admin.register(models.user)
 class userAdmin(admin.ModelAdmin):
+    list_display = ('name','family','email', 'studentCode')
     inlines = [Certification]
 
 
