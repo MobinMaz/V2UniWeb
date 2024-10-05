@@ -20,4 +20,5 @@ urlpatterns = [
     path('VipUser/', views.VipUser, name='video'),
     path('Certificate/<int:id>/', views.Certificate, name='certificate'),
     path('singleCertificate/<int:id>/', views.singleCertificate, name='singleCertificate'),
+    path('download_pdf/<int:post_id>/', views.download_pdf, name='download_pdf_api'),
 ]

@@ -15,7 +15,7 @@ class post(models.Model):
     title = models.CharField(max_length=100,default='',null=False,blank=False)
     #author = models.CharField(max_length=100,default='',null=False,blank=False)
     content = models.TextField(default='',null=True,blank=True)
-
+    pdf = models.FileField(upload_to='media/pdf/',null=True,blank=True)
     image = models.ImageField(upload_to='media/post/',default='default.jpg')
     pub_date = jalali_models.jDateTimeField()
     category = models.ManyToManyField(Categorie)
