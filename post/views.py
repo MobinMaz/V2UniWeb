@@ -1,10 +1,12 @@
-from django.shortcuts import render,redirect
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from . import models
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from . import loginForm , commentForm ,signForm
 from django.contrib import messages
 from tkinter import messagebox
+import os
 
 from .admin import userAdmin
 
@@ -168,3 +170,15 @@ def Certificate(request,id):
 def singleCertificate(request,id):
     certificate=models.Certificate.objects.get(id=id)
     return render(request=request,template_name='singleCertificate.html',context={'certificate':certificate})
+
+def download_pdf(request, post_id):
+    post = get_object_or_404(models.post, id=post_id)
+    file_path = post.pdf.path if post.pdf else None
+
+    if file_path and os.path.exists(file_path):
+        with open(file_path, 'rb') as pdf_file:
+            response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+            return response
+    else:
+        return HttpResponse("File not found", status=404)
